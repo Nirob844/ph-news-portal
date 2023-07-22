@@ -1,13 +1,14 @@
 import {
-  ArrowDownOutlined,
+  ArrowRightOutlined,
   CalendarOutlined,
+  CommentOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Row } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 
 const AllNews = ({ allNews }) => {
-  console.log(allNews);
   const { Meta } = Card;
   return (
     <>
@@ -20,7 +21,6 @@ const AllNews = ({ allNews }) => {
       >
         #TODAY HIGHLIGHT
       </h1>
-
       <Row
         gutter={{
           xs: 8,
@@ -29,7 +29,7 @@ const AllNews = ({ allNews }) => {
           lg: 32,
         }}
       >
-        {allNews.map((news) => (
+        {allNews?.map((news) => (
           <Col key={news.id} className="gutter-row" span={6}>
             <Card
               hoverable
@@ -39,7 +39,7 @@ const AllNews = ({ allNews }) => {
                   width={500}
                   height={200}
                   responsive
-                  alt="news"
+                  alt="news image"
                 />
               }
             >
@@ -48,11 +48,12 @@ const AllNews = ({ allNews }) => {
                 className="line"
                 style={{
                   height: "5px",
-                  margin: "20px",
+                  margin: "20px 0",
                   background: "#000",
                   width: "100%",
                 }}
               ></div>
+
               <p
                 style={{
                   display: "flex",
@@ -67,32 +68,35 @@ const AllNews = ({ allNews }) => {
                   <CalendarOutlined /> {news?.release_date}
                 </span>
                 <span>
-                  <CalendarOutlined /> {news?.comment_counter}
+                  <CommentOutlined /> {news?.comment_count} COMMENTS
                 </span>
                 <span>
                   <ProfileOutlined /> {news?.category}
                 </span>
               </p>
+
               <p style={{ fontSize: "15px" }}>
                 {news?.description.length > 100
                   ? news?.description.slice(0, 70) + "..."
                   : news?.description}
               </p>
-              <p
-                style={{
-                  fontSize: "15px",
-                  width: "100%",
-                  color: "white",
-                  marginTop: "20px",
-                  backgroundColor: "black",
-                  padding: "2px 5px",
-                  fontWeight: "300",
-                  letterSpacing: "3px",
-                  textAlign: "center",
-                }}
-              >
-                keep reading <ArrowDownOutlined />
-              </p>
+              <Link href={`/news/${news?.id}`}>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginTop: "20px",
+                    backgroundColor: "black",
+                    color: "white",
+                    width: "100%",
+                    padding: "2px 5px ",
+                    fontWeight: "300",
+                    letterSpacing: "3px",
+                    textAlign: "center",
+                  }}
+                >
+                  Keep Reading <ArrowRightOutlined />
+                </p>
+              </Link>
             </Card>
           </Col>
         ))}

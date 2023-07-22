@@ -4,7 +4,6 @@ import AllNews from "@/components/UI/allNews";
 import Head from "next/head";
 
 const HomePage = ({ allNews }) => {
-  console.log(allNews);
   return (
     <>
       <Head>
@@ -35,5 +34,6 @@ export const getStaticProps = async () => {
     props: {
       allNews: data,
     },
+    revalidate: 10,
   };
 };
